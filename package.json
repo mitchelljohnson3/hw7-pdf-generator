@@ -1,0 +1,23 @@
+{
+  "name": "hw7-pdf-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchelljohnson3/hw7-pdf-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitchelljohnson3/hw7-pdf-generator/issues"
+  },
+  "homepage": "https://github.com/mitchelljohnson3/hw7-pdf-generator#readme",
+  "dependencies": {
+    "electron-pdf": "^7.0.0",
+    "inquirer": "^7.0.4"
+  }
+}
