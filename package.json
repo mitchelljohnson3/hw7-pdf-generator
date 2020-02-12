@@ -18,8 +18,7 @@
   "homepage": "https://github.com/mitchelljohnson3/hw7-pdf-generator#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "electron": "^8.0.0",
-    "electron-html-to": "^2.6.0",
+    "html-pdf": "^2.2.0",
     "inquirer": "^7.0.4"
   }
 }

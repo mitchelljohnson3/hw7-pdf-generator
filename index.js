@@ -1,12 +1,7 @@
 const inq = require ('inquirer');
-const convertFactory = require ('electron-html-to');
 const axios = require('axios');
 const fs = require('fs');
-
-// sets the conversion type target to be PDF
-const conversion = convertFactory({
-  converterPath: convertFactory.converters.PDF
-});
+const pdf = require('html-pdf');
 
 // this function will take the github username, and fill the index.html file with the data
 function fetchData(answers) {
@@ -17,7 +12,7 @@ function fetchData(answers) {
             fillData(json.data, answers.color);
         })
 }
-
+// constructs the html file template to be converted to a pdf
 function fillData(json, userColor) {
     // fills index.html file with data
     const location = json.location.split(' ').join('+');
@@ -43,7 +38,12 @@ function fillData(json, userColor) {
         <h3>following ${json.following} users</h3>
     
         <style>
+            img{
+                height: 500px;
+                width: 500px;
+            }
             body{
+                font-size: 30pt;
                 background-color: ${userColor};
             }
         </style>
@@ -51,20 +51,17 @@ function fillData(json, userColor) {
     </html>`;
     convert(template);
 }
-
+// this takes the html file as a string, and turns it into a pdf using the module 'html-pdf'
 function convert(htmlFile) {
-    // converts html file to pdf
-    fs.writeFile('profile.html', htmlFile, (err) => {
-        if(err){
-            throw err;
-        }
-    })
+
+    const options = { format: 'Letter' };
+    pdf.create(htmlFile, options).toFile('./profile.pdf', (err, res) => {
+        if(err) return console.log(err);
+        // if successful
+        console.log('Success!');
+    });
 }
-
-const init = async function(questions) {
-    const htmlFile = await fetchData(questions);
-};
-
+// starts the program by asking questions to the user
 inq.prompt(
     [{
         message: 'github username?',
@@ -76,5 +73,5 @@ inq.prompt(
     }]
 ).then( (questions) => {
     // this will initialize the program
-    init(questions);
-})
+    fetchData(questions);
+});
