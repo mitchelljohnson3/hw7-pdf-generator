@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/mitchelljohnson3/hw7-pdf-generator#readme",
   "dependencies": {
-    "electron-pdf": "^7.0.0",
+    "electron-html-to": "^2.6.0",
     "inquirer": "^7.0.4"
   }
 }
