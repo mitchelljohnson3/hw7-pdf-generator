@@ -6,6 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <img src="${imageUrl}">
+    <h1>${username}</h1>
+    <ul>
+        <li><a href="${userLocationUrl}">${userLocationUrl}</a></li>
+        <li><a href="${githubProfileUrl}">${githubProfileUrl}</a></li>
+        <li><a href="${userBlogUrl}">${userBlogUrl}</a></li>
+    </ul>
+    <h2>${userBio}</h2>
+    <h3>${numRepos} repositories</h3>
+    <h3>${numRepos} followers</h3>
+    <h3>${numRepos} github stars</h3>
+    <h3>following ${numRepos} users</h3>
+
+    <style>
+        body{
+            background-color: ${userColor};
+        }
+    </style>
 </body>
 </html>

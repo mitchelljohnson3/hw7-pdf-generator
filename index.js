@@ -8,25 +8,55 @@ const conversion = convertFactory({
 });
 
 // this function will take the github username, and fill the index.html file with the data
-function fetchData(username) {
-    const url = `https://api.github.com/users/${username}`
-    fetch(username)
+function fetchData(answers) {
+    const url = `https://api.github.com/users/${answers.username}`
+    // gotta use axios buddy
+    fetch(url)
         .then( (response) => {
             return response.json();
         })
         .then( (json) => {
-            fillData(json);            
+            return fillData(json, answers.color);            
         })
 }
 
-function fillData(json) {
+function fillData(json, userColor) {
     // fills index.html file with data
+    const template = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <img src="${imageUrl}">
+        <h1>${json.login}</h1>
+        <ul>
+            <li><a href="${userLocationUrl}">${userLocationUrl}</a></li>
+            <li><a href="${json.html_url}">${json.html_url}</a></li>
+            <li><a href="${json.blog}">${json.blog}</a></li>
+        </ul>
+        <h2>${json.bio}</h2>
+        <h3>${numRepos} repositories</h3>
+        <h3>${numRepos} followers</h3>
+        <h3>${numRepos} github stars</h3>
+        <h3>following ${numRepos} users</h3>
+    
+        <style>
+            body{
+                background-color: ${userColor};
+            }
+        </style>
+    </body>
+    </html>`;
 
+    return template;
 }
 
 function convert(htmlFile) {
     // converts html file to pdf
-    conversion({ html: '<h1>Hello World</h1>' }, function(err, result) {
+    conversion({ html: htmlFile }, function(err, result) {
         if (err) {
             return console.error(err);
         }
@@ -38,6 +68,10 @@ function convert(htmlFile) {
     });
 }
 
+const init = async function(questions) {
+    const htmlFile = await fetchData(questions);
+};
+
 inq.prompt(
     {
         message: 'github username?',
@@ -48,6 +82,6 @@ inq.prompt(
         name: 'color'
     }
 ).then( (questions) => {
-    // this will call the fetchData function and then convert the index.html file into into a pdf using electron-pdf
-
+    // this will initialize the program
+    init(questions);
 })
